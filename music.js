@@ -30,7 +30,25 @@ function renderList() {
 }
 
 $('#getPlaylistBtn').click(function (event) {
-  // TODO: Display a list of music.
+  var iTunesURL = 'https://itunes.apple.com/search'
+  for (var i = 0; i < musicInfo.length; i++) {
+    var musicKeyword = musicInfo[i];
+    let iTunesOptions = { 
+      term: musicKeyword,
+      limit: 5,
+      format: "json"
+    };
+
+    $.getJSON( iTunesURL, iTunesOptions, function(data){
+        $.each(data.results, function(i,result) {
+          console.log("what");
+          var newItem = "<p>";
+          newItem += result.artistName + ": " + result.trackName + "</p>";
+          $("#results").append(newItem);
+        })
+      }
+    )
+  };
   // You may use anything from musicInfo.
   console.log('Testing Music Call');
 });
